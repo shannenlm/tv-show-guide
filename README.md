@@ -17,20 +17,43 @@ URL: --
 
 Data point fields:
 - `Field 1`:     Title              `Type: String`
-- `Field 2`:     Artist(s)          `Type: [String]`
-- `Field 3`:     Genre(s)           `Type: [String]`
-- `Field 4`:     Language           `Type: String`
-- `Field 5`:     Rate (out of 5)    `Type: Number`
+- `Field 2`:     Network            `Type: String`
+- `Field 3`:     Actor(s)           `Type: [String]`
+- `Field 4`:     Genre(s)           `Type: [String]`
+- `Field 5`:     Language           `Type: String`
+- `Field 6`:     Avg. Rating        `Type: Number`
+- `Field 7`:     Review(s)          `Type: [Review]`
+- `Field 8`:     Comment(s)         `Type: [Comment]`
 
-Schema: 
+Movie Schema: 
 ```javascript
 {
    title: String, 
-   artists: [String],
+   network: String,
+   actors: [String],
    genres: [String],
    language: String,
-   suggested: Number,  
-   rate: Number
+   rating: Number,
+   reviews: [Review],  
+   comments: [Comment]
+}
+```
+
+Review Schema: 
+```javascript
+{
+   author: String, 
+   publisher: String,
+   rating: Number,
+   text: String
+}
+```
+
+Comment Schema: 
+```javascript
+{
+   username: String, 
+   text: String
 }
 ```
 
@@ -69,18 +92,18 @@ request(options, function (error, response, body) {
 
 ### 3. View Data
 
-GET endpoint route: `/api/getSongs`
+GET endpoint route: `/api/getshows`
 
 ### 4. Search Data
 
-Search Field: Song title
+Search Field: TV Show Title
 
 ### 5. Navigation Pages
 
 Navigation Filters
-1. Best Songs -> `  /bestsongs  `
+1. By Rating -> `  /byrating  `
 2. By Genre -> `  /bygenre  `
-3. English Songs -> `  /english  `
-4. Alphabetically -> `  /alphabetical  `
+3. Alphabetically -> `  /alphabetical  `
+4. Most Reviews => `  /mostreviews  `
 5. Random Rec -> `  /randomrec  `
 
