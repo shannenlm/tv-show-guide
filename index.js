@@ -3,24 +3,13 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var exphbs = require('express-handlebars');
 var fs = require('fs');
-var dataUtil = require("./data-util");
+var mongoose = require('mongoose');
+var dotenv = require('dotenv');
+var TVShow = require('./models/TV-shows');
 var _ = require("underscore");
 
-var app = express();
-
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
-app.engine('handlebars', exphbs({
-  defaultLayout: 'main',
-  helpers: require('./handlebars-helpers')
-}));
-app.set('view engine', 'handlebars');
-app.use('/public', express.static('public'));
-
-var mongoose = require('mongoose');
+// Load environment variables
+dotenv.load();
 
 // Connect to MongoDB
 console.log(process.env.MONGODB)
@@ -30,6 +19,21 @@ mongoose.connection.on('error', function() {
     process.exit(1);
 });
 
+// Set up Express App
+var app = express();
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main',
+  helpers: require('./handlebars-helpers')
+}));
+app.set('view engine', 'handlebars');
+app.use('/public', express.static('public'));
+
 
 app.get("/", function (req, res) {
   res.render('home', {
@@ -37,7 +41,37 @@ app.get("/", function (req, res) {
   });
 });
 
-app.get("/create", function (req, res) {
+app.post("/create", function(req, res) { 
+  var body = req.body;
+
+  // Transform tags and content
+  body.actors = body.artists.split(",");
+  body.actors = body.artists.map(s => s.trim());
+
+  body.genres = body.genres.split(",");
+  body.genres = body.genres.map(s => s.trim());
+
+  // Create new TV show
+  var show = new TVShow({
+    title: body.title,
+    network: body.network,
+    actors: body.actors,
+    genres: body.genres,
+    language: body.language, 
+    rating: parseInt(body.rating),
+    reviews: [],
+    comments: []
+  });
+
+  // Save show to database
+  show.save(function(err) { 
+    if (err) throw err;
+    return res.send('Succesfully inserted TV show.');
+  })
+
+});
+
+/* app.get("/create", function (req, res) {
   res.render('create', {});
 });
 
@@ -205,7 +239,7 @@ app.get("/bygenre", function(req, res) {
   res.render('bygenre', {
     data: _DATA
   });
-});
+}); */
 
 app.listen(process.env.PORT || 3000, function() {
     console.log('Listening!');

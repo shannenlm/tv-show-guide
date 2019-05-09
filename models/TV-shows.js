@@ -60,5 +60,6 @@ var tvshowSchema = new mongoose.Schema({
     comments: [commentSchema]
 });
 
-var TVShow = mongoose.model('TVShow', tvshowSchema, 'TVRatings'); // constructor for schema
+var TVShow = mongoose.model('TVShow', tvshowSchema); // constructor for schema
+
 module.exports = TVShow
