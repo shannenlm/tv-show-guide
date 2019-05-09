@@ -64,7 +64,7 @@ app.post("/create", function(req, res) {
   });
 
   // if show does not exist, create it. else, don't make it
-  TVShow.findOne({ _title: req.params.title }, function(err, tvshow) { 
+  TVShow.findOne({ title: req.params.title }, function(err, tvshow) { 
     if (err) throw err; 
     if (tvshow) { 
       // Save show to database
@@ -100,7 +100,7 @@ app.post("/api/create", function(req, res) {
 });
 
   // if show does not exist, create it. else, don't make it
-  TVShow.findOne({ _title: req.params.title }, function(err, tvshow) { 
+  TVShow.findOne({ title: req.params.title }, function(err, tvshow) { 
     if (err) throw err; 
     if (tvshow) { 
       // Save show to database
