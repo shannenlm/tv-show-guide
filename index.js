@@ -44,6 +44,19 @@ app.get("/", function (req, res) {
   });
 });
 
+// API call that displays all the shows we have
+app.get("/api/shows", function(res,req){ 
+  TVShow.find({}, function(err, shows) { 
+    if (err) throw err; 
+    res.send(shows);
+  });
+});
+
+// GET request for the create a show page
+app.get("/addshow", function(req,res) { 
+  res.render("addshow", {});
+})
+
 app.post("/addshow", function(req, res) { 
   var body = req.body;
 
@@ -67,7 +80,7 @@ app.post("/addshow", function(req, res) {
   });
 
   // if show does not exist, create it. else, don't make it
-  TVShow.findOne({ title: req.params.title }, function(err, tvshow) { 
+  TVShow.findOne({ title: body.title }, function(err, tvshow) { 
     if (err) throw err; 
     if (!tvshow) { 
       // Save show to database
@@ -100,7 +113,7 @@ app.post("/api/addshow", function(req, res) {
 });
 
   // if show does not exist, create it. else, don't make it
-  TVShow.findOne({ title: req.params.title }, function(err, tvshow) { 
+  TVShow.findOne({ title: body.title }, function(err, tvshow) { 
     if (err) throw err; 
     if (!tvshow) { 
       // Save show to database
@@ -109,6 +122,44 @@ app.post("/api/addshow", function(req, res) {
         return res.send('Succesfully inserted TV show.');
       })
     }
+  });
+});
+
+
+// POST for adding a review
+app.post("/show/:title/add-review", function(req, res) { 
+  TVShow.findOne({ title: req.params.title}, function(err, show) { 
+    if (err) throw err;
+    if (!show) return res.send("No TV show with that name found.");
+
+    show.reviews.push({
+      author: req.body.author,
+      publisher: req.body.publisher,
+      rating: parseInt(req.body.rating),
+      text: req.body.text
+    })
+
+    show.save(function(err) { 
+      if (err) throw err;
+      res.send('Sucessfully added review.');
+    });
+  });
+});
+
+app.post("/show/:title/add-comment", function(req,res) { 
+  TVShow.findOne({ title: req.params.title}, function(err, show) { 
+    if (err) throw err;
+    if (!show) return res.send("No TV show with that name found.");
+
+    show.comments.push({
+      username: req.body.username,
+      text: req.body.text
+    })
+
+    show.save(function(err) { 
+      if (err) throw err;
+      res.send('Sucessfully added review.');
+    });
   });
 });
 
