@@ -64,7 +64,7 @@ app.post("/create", function(req, res) {
   // if show does not exist, create it. else, don't make it
   TVShow.findOne({ title: req.params.title }, function(err, tvshow) { 
     if (err) throw err; 
-    if (tvshow) { 
+    if (!tvshow) { 
       // Save show to database
       show.save(function(err) { 
         if (err) throw err;
@@ -79,11 +79,8 @@ app.post("/api/create", function(req, res) {
   var body = req.body;
 
   // Transform tags and content
-  body.actors = body.artists.split(",");
-  body.actors = body.artists.map(s => s.trim());
-
-  body.genres = body.genres.split(",");
-  body.genres = body.genres.map(s => s.trim());
+  body.actors = body.actors;
+  body.genres = body.genres;
 
   // Create new TV show
   var show = new TVShow({
@@ -100,7 +97,7 @@ app.post("/api/create", function(req, res) {
   // if show does not exist, create it. else, don't make it
   TVShow.findOne({ title: req.params.title }, function(err, tvshow) { 
     if (err) throw err; 
-    if (tvshow) { 
+    if (!tvshow) { 
       // Save show to database
       show.save(function(err) { 
         if (err) throw err;
