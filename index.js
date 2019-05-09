@@ -63,12 +63,53 @@ app.post("/create", function(req, res) {
     comments: []
   });
 
-  // Save show to database
-  show.save(function(err) { 
-    if (err) throw err;
-    return res.send('Succesfully inserted TV show.');
-  })
+  // if show does not exist, create it. else, don't make it
+  TVShow.findOne({ _title: req.params.title }, function(err, tvshow) { 
+    if (err) throw err; 
+    if (tvshow) { 
+      // Save show to database
+      show.save(function(err) { 
+        if (err) throw err;
+        return res.send('Succesfully inserted TV show.');
+      })
+    }
+  });
 
+});
+
+app.post("/api/create", function(req, res) { 
+  var body = req.body;
+
+  // Transform tags and content
+  body.actors = body.artists.split(",");
+  body.actors = body.artists.map(s => s.trim());
+
+  body.genres = body.genres.split(",");
+  body.genres = body.genres.map(s => s.trim());
+
+  // Create new TV show
+  var show = new TVShow({
+    title: body.title,
+    network: body.network,
+    actors: body.actors,
+    genres: body.genres,
+    language: body.language, 
+    rating: body.rating,
+    reviews: [],
+    comments: []
+});
+
+  // if show does not exist, create it. else, don't make it
+  TVShow.findOne({ _title: req.params.title }, function(err, tvshow) { 
+    if (err) throw err; 
+    if (tvshow) { 
+      // Save show to database
+      show.save(function(err) { 
+        if (err) throw err;
+        return res.send('Succesfully inserted TV show.');
+      })
+    }
+  });
 });
 
 /* app.get("/create", function (req, res) {
