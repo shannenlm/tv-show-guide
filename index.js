@@ -36,7 +36,12 @@ app.use('/public', express.static('public'));
 
 
 app.get("/", function (req, res) {
-  res.send("it work :D");
+  TVShow.find({}, function(err, tvshows) {
+    if (err) throw err;
+    res.render('home', {
+      data: tvshows
+    });
+  });
 });
 
 // API call that displays all the shows we have
@@ -48,11 +53,11 @@ app.get("/api/shows", function(res,req){
 });
 
 // GET request for the create a show page
-app.get("/create", function(req,res) { 
-  res.render("create", {});
+app.get("/addshow", function(req,res) { 
+  res.render("addshow", {});
 })
 
-app.post("/create", function(req, res) { 
+app.post("/addshow", function(req, res) { 
   var body = req.body;
 
   // Transform tags and content
@@ -88,7 +93,7 @@ app.post("/create", function(req, res) {
 
 });
 
-app.post("/api/create", function(req, res) { 
+app.post("/api/addshow", function(req, res) { 
   var body = req.body;
 
   // Transform tags and content
