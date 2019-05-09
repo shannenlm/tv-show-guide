@@ -9,7 +9,7 @@ var TVShow = require('./models/TV-shows');
 var _ = require("underscore");
 
 // Load environment variables
-dotenv.load();
+dotenv.config();
 
 // Connect to MongoDB
 console.log(process.env.MONGODB)
@@ -36,9 +36,7 @@ app.use('/public', express.static('public'));
 
 
 app.get("/", function (req, res) {
-  res.render('home', {
-    data: _DATA
-  });
+  res.send("it work :D");
 });
 
 app.post("/create", function(req, res) { 
