@@ -61,8 +61,9 @@ app.post("/addshow", function(req, res) {
   var body = req.body;
 
   // Transform tags and content
-  body.actors = body.artists.split(",");
-  body.actors = body.artists.map(s => s.trim());
+  body.title = body.title.toUpperCase();
+  body.actors = body.actors.split(",");
+  body.actors = body.actors.map(s => s.trim());
 
   body.genres = body.genres.split(",");
   body.genres = body.genres.map(s => s.trim());
@@ -88,18 +89,17 @@ app.post("/addshow", function(req, res) {
         if (err) throw err;
         return res.send('Succesfully inserted TV show.');
       })
-
-      res.redirect("/");
     }
   });
   
-
+  res.redirect("/");
 });
 
 app.post("/api/addshow", function(req, res) { 
   var body = req.body;
 
   // Transform tags and content
+  body.title = body.title.toUpperCase();
   body.actors = body.actors;
   body.genres = body.genres;
 
@@ -116,7 +116,7 @@ app.post("/api/addshow", function(req, res) {
 });
 
   // if show does not exist, create it. else, don't make it
-  TVShow.findOne({ title: body.title }, function(err, tvshow) { 
+  TVShow.findOne({ title: body.title.toUpperCase() }, function(err, tvshow) { 
     if (err) throw err; 
     if (!tvshow) { 
       // Save show to database
@@ -129,12 +129,12 @@ app.post("/api/addshow", function(req, res) {
 });
 
 app.get("/show/:title/add-review", function(req,res) { 
-  res.render("reviewform.handlebars", {});
+  res.render("reviewform.handlebars", {title: req.params.title.toUpperCase()});
 })
 
 // POST for adding a review
 app.post("/show/:title/add-review", function(req, res) { 
-  TVShow.findOne({ title: req.params.title}, function(err, show) { 
+  TVShow.findOne({ title: req.params.title.toUpperCase()}, function(err, show) { 
     if (err) throw err;
     if (!show) return res.send("No TV show with that name found.");
 
@@ -153,11 +153,11 @@ app.post("/show/:title/add-review", function(req, res) {
 });
 
 app.get("/show/:title/add-comment", function(req,res) { 
-  res.render("commentform.handlebars", {});
+  res.render("commentform.handlebars", {title: req.params.title.toUpperCase()});
 });
 
 app.post("/show/:title/add-comment", function(req,res) { 
-  TVShow.findOne({ title: req.params.title}, function(err, show) { 
+  TVShow.findOne({ title: req.params.title.toUpperCase()}, function(err, show) { 
     if (err) throw err;
     if (!show) return res.send("No TV show with that name found.");
 
