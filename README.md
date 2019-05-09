@@ -21,7 +21,7 @@ Data point fields:
 - `Field 3`:     Actor(s)           `Type: [String]`
 - `Field 4`:     Genre(s)           `Type: [String]`
 - `Field 5`:     Language           `Type: String`
-- `Field 6`:     Avg. Rating        `Type: Number`
+- `Field 6`:     Rating (on IMDb)   `Type: Number`
 - `Field 7`:     Review(s)          `Type: [Review]`
 - `Field 8`:     Comment(s)         `Type: [Comment]`
 
