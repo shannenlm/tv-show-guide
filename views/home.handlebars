@@ -2,21 +2,28 @@
 
 <input id="search" name="search" type="text" placeholder="Search by title...">
 
-{{#each data}}
-<article class="entry">
-    <h2 id="entrytitle">{{this.title}}</h2>
-    <div class="content">
-        <div id="artists">Artist(s): {{this.artists}} </div>
-        <div id="genres">Genre(s): {{this.genres}}</div>
-        <div id="language">Primary language: {{this.language}}</div>
-        <div id="rating">Average rating: {{ divide this.rate this.suggested }}</div>
-    </div>
-</article>
-{{else}}
+<ul class="showlist">
+    {{#each data}}
+    <li class="showlistitem">
+        <a href="/show/{{this.title}}" class="showlink">
+            <div class="entry">
+                <h2 id="entrytitle">{{this.title}}</h2>
+                <div class="content">
+                    <div id="network"><b style="font-weight:600">Network:</b> {{this.network}} </div>
+                    <div id="artists"><b style="font-weight:600">Actor(s):</b> {{this.actors}} </div>
+                    <div id="genres"><b style="font-weight:600">Genre(s):</b> {{this.genres}}</div>
+                    <div id="language"><b style="font-weight:600">Primary language:</b> {{this.language}}</div>
+                    <div id="rating"><b style="font-weight:600">Rating (as seen on IMDb):</b> {{this.rating}}</div>
+                </div>
+            </div>
+        </a>
+    </li>
+    {{else}}
+</ul>
 
 <article>
-    <h1>There are no song recs yet. :(</h1>
-    <a href="/create">Create the first one!</a>
+    <h1>There are no TV shows yet. :(</h1>
+    <a href="/create">Add the first one!</a>
 </article>
 {{/each}}
 
@@ -42,13 +49,13 @@
                 }
             });
 
-            if (count == 0) { 
+            if (count == 0) {
                 $("#noMatches").show();
             }
-            else { 
+            else {
                 $("#noMatches").hide();
             }
-        
+
         });
 
     });
