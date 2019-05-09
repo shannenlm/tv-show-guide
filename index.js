@@ -88,8 +88,11 @@ app.post("/addshow", function(req, res) {
         if (err) throw err;
         return res.send('Succesfully inserted TV show.');
       })
+
+      res.redirect("/");
     }
   });
+  
 
 });
 
@@ -147,6 +150,10 @@ app.post("/show/:title/add-review", function(req, res) {
       res.send('Sucessfully added review.');
     });
   });
+});
+
+app.get("/show/:title/add-comment", function(req,res) { 
+  res.render("commentform.handlebars", {});
 });
 
 app.post("/show/:title/add-comment", function(req,res) { 

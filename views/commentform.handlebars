@@ -1,0 +1,21 @@
+
+<h1 id="title">Create New Review</h1>
+<article>
+    <form method="POST" action="/show/:title/add-comment">
+        <div class="input-field">
+            <label><b>Username: </b></label>
+            <input class="input-text" type="text" name="username" size="50" placeholder="Name...">
+        </div>
+        <div class="input-field">
+            <label><b>Comment: </b></label>
+            <textarea class="input-text" id="text" rows="100" cols="100" name="comment" size="50" placeholder="Type here..."></textarea>
+        </div>
+
+        <div id="submit"><button type="submit" id="submit"><b>Submit</b></button></div>
+    </form>
+
+    <script>
+        document.getElementById("text").style.height="200px";
+        document.getElementById("text").style.height="200px";
+    </script>
+</article>
