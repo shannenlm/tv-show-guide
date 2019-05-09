@@ -3,34 +3,27 @@
 <article>
     <form method="POST" action="/create">
         <div class="input-field">
-            <label><b>Song Title: </b></label>
-            <input class="input-text" type="text" name="title" size="50" placeholder="Song title...">
+            <label><b>Author: </b></label>
+            <input class="input-text" type="text" name="author" size="50" placeholder="Name...">
         </div>
          <div class="input-field">
-            <label><b>Artist(s): </b></label>
-            <input class="input-text" type="text" name="artists" size="50" placeholder="Separate with commas...">
+            <label><b>Publisher: </b></label>
+            <input class="input-text" type="text" name="publisher" size="50" placeholder="Publisher...">
         </div>
         <div class="input-field">
-            <label><b>Genre(s): </b></label>
-            <input class="input-text" type="text" name="genres" size="50" placeholder="Separate with commas...">
+            <label><b>Rating (out of 10):</b></label>
+            <input type="number" id="rating" name="rating" min="0.0" max="10.0" step="0.1" value="5.0">
         </div>
         <div class="input-field">
-            <label><b>Language: </b></label>
-            <input class="input-text" type="text" name="language" size="50" placeholder="Primary language..."></textarea>
+            <label><b>Review: </b></label>
+            <textarea class="input-text" id="text" rows="100" cols="100" name="text" size="50" placeholder="Type here..."></textarea>
         </div>
-         <input class="input-text" type="text" name="suggested" size="50" hidden="hidden" value="0"></textarea>
-        <div class="input-field">
-            <label><b>Rate (out of 5):</b></label>
-            <input id="rate" type="range" name="rate" min="0" max="5" value="3">
-            <label id="ratedisplay">3</label>
-        </div>
-        
-        <div id="submit"><button type="submit" id="submit"><b>Create Song Rec</b></button></div>
+
+        <div id="submit"><button type="submit" id="submit"><b>Submit</b></button></div>
     </form>
 
     <script>
-        document.getElementById("rate").oninput = function() {
-            document.getElementById("ratedisplay").innerHTML = this.value;
-        };
+        document.getElementById("text").style.height="200px";
+        document.getElementById("text").style.height="200px";
     </script>
 </article>

@@ -125,6 +125,9 @@ app.post("/api/addshow", function(req, res) {
   });
 });
 
+app.get("/show/:title/add-review", function(req,res) { 
+  res.render("reviewform.handlebars", {});
+})
 
 // POST for adding a review
 app.post("/show/:title/add-review", function(req, res) { 
