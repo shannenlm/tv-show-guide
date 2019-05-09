@@ -173,6 +173,67 @@ app.post("/show/:title/add-comment", function(req,res) {
   });
 });
 
+// Delete a TV Show :( 
+app.delete("/show/:title", function(req,res) { 
+  TVShow.findByIdAndRemove(req.params.title.toUpperCase(), function(err, show) { 
+    if (err) throw err;
+    res.send('TV Show deleted!');
+  });
+});
+
+app.delete("api/show/:title", function(req,res) { 
+  TVShow.findByIdAndRemove(req.params.title.toUpperCase(), function(err, show) { 
+    if (err) throw err;
+
+    TVShow.find({}, function(err, shows) { 
+      if (err) throw err; 
+      res.send(shows);
+    });
+  });
+});
+
+// Delete the last review put in for a certain show
+app.delete('/show/:title/review/last', function(req, res) {
+  Movie.findOne({ title: req.params.title.toUpperCase() }, function(err, show) {
+      if (err) throw err;
+      if (!show) return res.send('No show found with that title.');
+
+      if (show.reviews.length == 0) {
+          return res.send('No reviews to delete.');
+      }
+
+      show.reviews.splice(movie.reviews.length - 1, 1);
+
+      show.save(function(err) {
+          if (err) throw err;
+          res.send('Sucessfully deleted last review.');
+      });
+  });
+});
+
+app.delete('api/show/:title/review/last', function(req, res) {
+  Movie.findOne({ title: req.params.title.toUpperCase() }, function(err, show) {
+      if (err) throw err;
+      if (!show) return res.send('No show found with that title.');
+
+      if (show.reviews.length == 0) {
+          return res.send('No reviews to delete.');
+      }
+
+      show.reviews.splice(movie.reviews.length - 1, 1);
+
+      show.save(function(err) {
+          if (err) throw err;
+          res.send('Sucessfully deleted last review.');
+      });
+
+      TVShow.find({}, function(err, shows) { 
+        if (err) throw err; 
+        res.send(shows);
+      });
+  });
+});
+
 /* app.get("/create", function (req, res) {
   res.render('create', {});
 });
