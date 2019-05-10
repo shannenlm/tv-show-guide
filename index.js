@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 var dotenv = require('dotenv');
 var TVShow = require('./models/TV-shows');
 var _ = require("underscore");
+var ld = require("lodash");
 var tinycolor = require("tinycolor2"); // IMPLEMENT THIS
 
 // Load environment variables
@@ -15,9 +16,9 @@ dotenv.config();
 // Connect to MongoDB
 console.log(process.env.MONGODB)
 mongoose.connect(process.env.MONGODB);
-mongoose.connection.on('error', function() {
-    console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
-    process.exit(1);
+mongoose.connection.on('error', function () {
+  console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
+  process.exit(1);
 });
 
 // Set up Express App
@@ -37,7 +38,7 @@ app.use('/public', express.static('public'));
 
 
 app.get("/", function (req, res) {
-  TVShow.find({}, function(err, tvshows) {
+  TVShow.find({}, function (err, tvshows) {
     if (err) throw err;
     res.render('home', {
       data: tvshows
@@ -46,56 +47,89 @@ app.get("/", function (req, res) {
 });
 
 app.get('/byrating', function (req, res) {
-  TVShow.find({}, function(err, tvshows) {
+  TVShow.find({}, function (err, tvshows) {
     if (err) throw err;
-    var byrating = _.sortBy(tvshows, function (show) {
+    var byrating = ld.orderBy(tvshows, ['rating', 'title'], ['desc', 'asc']);
+    /*var byrating = _.sortBy(tvshows, function (show) {
       return -parseInt(show.rating);
-    })
-    console.log(byrating);
+    })*/
     res.render('byrating', {
       data: byrating
     });
   });
 })
 
-app.get('/bygenre', function(req, res) {
-  TVShow.find({}, function(err, tvshows) {
-    if(err) throw err;
-    TVShow.find({}, 'genres', function(err, genres) {
-      var g = _.uniq(_.flatten(_.pluck(genres, 'genres')), function(ele){
+app.get('/bygenre', function (req, res) {
+  TVShow.find({}, function (err, tvshows) {
+    if (err) throw err;
+    TVShow.find({}, 'genres', function (err, genres) {
+      var g = _.uniq(_.flatten(_.pluck(genres, 'genres')), function (ele) {
         return ele.toLowerCase();
       });
+      var alpha = ld.orderBy(tvshows, ['title'], ['asc']);
       res.render('bygenre', {
         genres: g,
-        data: tvshows
+        data: alpha
       });
     });
   });
 });
 
-app.get('/about', function(req, res) {
-  res.render('about', {});
-});
+app.get('/about', function (req, res) {
+  res.render('about');
+})
+
+app.get('/alphabetical', function (req, res) {
+  TVShow.find({}, function (err, tvshows) {
+    if (err) throw err;
+    var alphabetical = _.sortBy(tvshows, function (show) {
+      return show.title;
+    })
+    res.render('alphabetically', {
+      data: alphabetical
+    });
+  });
+})
+
+app.get('/randomshow', function (req, res) {
+  TVShow.find({}, function (err, tvshows) {
+    var rando = _.first(_.shuffle(tvshows))
+    res.render('randomshow', {
+      data: [rando]
+    });
+  });
+})
+
+app.get('/mostreviews', function (req, res) {
+  TVShow.find({}, function (err, tvshows) {
+    var sorted = _.sortBy(tvshows, function(show) {
+      return -parseInt(show.reviews.length);
+    });
+    res.render('mostreviews', {
+      data: sorted
+    });
+  });
+})
 
 // API call that displays all the shows we have
-app.get("/api/shows", function(req,res){ 
-  TVShow.find({}, function(err, shows) { 
-    if (err) throw err; 
-    
+app.get("/api/shows", function (req, res) {
+  TVShow.find({}, function (err, shows) {
+    if (err) throw err;
+
     res.send(shows);
   });
 });
 
-app.get("/show/:title", function(req, res){
-  TVShow.findOne({title: req.params.title.toUpperCase()}, function(err, show) { 
-    if (err) throw err; 
-    
+app.get("/show/:title", function (req, res) {
+  TVShow.findOne({ title: req.params.title }, function (err, show) {
+    if (err) throw err;
+
     res.render("tvshow", {
-      _title: show.title, 
-      _network: show.network, 
+      _title: show.title,
+      _network: show.network,
       _actors: show.actors,
-      _genres: show.genres, 
-      _language: show.language, 
+      _genres: show.genres,
+      _language: show.language,
       _rating: show.rating,
       _reviews: show.reviews,
       _comments: show.comments
@@ -104,15 +138,15 @@ app.get("/show/:title", function(req, res){
 });
 
 // GET request for the create a show page
-app.get("/addshow", function(req,res) { 
+app.get("/addshow", function (req, res) {
   res.render("addshow", {});
 })
 
-app.post("/addshow", function(req, res) { 
+app.post("/addshow", function (req, res) {
   var body = req.body;
 
   // Transform tags and content
-  body.title = body.title.toUpperCase();
+  body.title = body.title;
   body.actors = body.actors.split(",");
   body.actors = body.actors.map(s => s.trim());
 
@@ -125,32 +159,32 @@ app.post("/addshow", function(req, res) {
     network: body.network,
     actors: body.actors,
     genres: body.genres,
-    language: body.language, 
+    language: body.language,
     rating: parseInt(body.rating),
     reviews: [],
     comments: []
   });
 
   // if show does not exist, create it. else, don't make it
-  TVShow.findOne({ title: body.title }, function(err, tvshow) { 
-    if (err) throw err; 
-    if (!tvshow) { 
+  TVShow.findOne({ title: body.title }, function (err, tvshow) {
+    if (err) throw err;
+    if (!tvshow) {
       // Save show to database
-      show.save(function(err) { 
+      show.save(function (err) {
         if (err) throw err;
         return res.send('Succesfully inserted TV show.');
       })
     }
   });
-  
+
   res.redirect("/");
 });
 
-app.post("/api/addshow", function(req, res) { 
+app.post("/api/addshow", function (req, res) {
   var body = req.body;
 
   // Transform tags and content
-  body.title = body.title.toUpperCase();
+  body.title = body.title;
   body.actors = body.actors;
   body.genres = body.genres;
 
@@ -160,18 +194,18 @@ app.post("/api/addshow", function(req, res) {
     network: body.network,
     actors: body.actors,
     genres: body.genres,
-    language: body.language, 
+    language: body.language,
     rating: body.rating,
     reviews: [],
     comments: []
-});
+  });
 
   // if show does not exist, create it. else, don't make it
-  TVShow.findOne({ title: body.title.toUpperCase() }, function(err, tvshow) { 
-    if (err) throw err; 
-    if (!tvshow) { 
+  TVShow.findOne({ title: body.title }, function (err, tvshow) {
+    if (err) throw err;
+    if (!tvshow) {
       // Save show to database
-      show.save(function(err) { 
+      show.save(function (err) {
         if (err) throw err;
         return res.send('Succesfully inserted TV show.');
       })
@@ -179,13 +213,13 @@ app.post("/api/addshow", function(req, res) {
   });
 });
 
-app.get("/show/:title/add-review", function(req,res) { 
-  res.render("reviewform.handlebars", {title: req.params.title.toUpperCase()});
+app.get("/show/:title/add-review", function (req, res) {
+  res.render("reviewform.handlebars", { title: req.params.title });
 })
 
 // POST for adding a review
-app.post("/show/:title/add-review", function(req, res) { 
-  TVShow.findOne({ title: req.params.title.toUpperCase()}, function(err, show) { 
+app.post("/show/:title/add-review", function (req, res) {
+  TVShow.findOne({ title: req.params.title }, function (err, show) {
     if (err) throw err;
     if (!show) return res.send("No TV show with that name found.");
 
@@ -196,92 +230,92 @@ app.post("/show/:title/add-review", function(req, res) {
       text: req.body.text
     })
 
-    show.save(function(err) { 
+    show.save(function (err) {
       if (err) throw err;
-      res.send('Sucessfully added review.');
+      res.redirect('/show/' + req.params.title);
     });
   });
 });
 
-app.get("/show/:title/add-comment", function(req,res) { 
-  res.render("commentform.handlebars", {title: req.params.title.toUpperCase()});
+app.get("/show/:title/add-comment", function (req, res) {
+  res.render("commentform.handlebars", { title: req.params.title });
 });
 
-app.post("/show/:title/add-comment", function(req,res) { 
-  TVShow.findOne({ title: req.params.title.toUpperCase()}, function(err, show) { 
+app.post("/show/:title/add-comment", function (req, res) {
+  TVShow.findOne({ title: req.params.title }, function (err, show) {
     if (err) throw err;
     if (!show) return res.send("No TV show with that name found.");
 
     show.comments.push({
       username: req.body.username,
-      text: req.body.text
+      text: req.body.comment
     })
 
-    show.save(function(err) { 
+    show.save(function (err) {
       if (err) throw err;
-      res.send('Sucessfully added review.');
+      res.redirect('/show/' + req.params.title);
     });
   });
 });
 
 // Delete a TV Show :( 
 app.delete("/show/:title", function(req,res) { 
-  TVShow.findOneAndDelete({title: req.params.title.toUpperCase()}, function(err, show) { 
+  TVShow.findOneAndDelete({title: req.params.title}, function(err, show) { 
     if (err) throw err;
     res.send('TV Show deleted!');
   });
 });
 
 app.delete("api/show/:title", function(req,res) { 
-  TVShow.findOneAndDelete({title: req.params.title.toUpperCase()}, function(err, show) { 
+  TVShow.findOneAndDelete({title: req.params.title}, function(err, show) { 
     if (err) throw err;
 
-    TVShow.find({}, function(err, shows) { 
-      if (err) throw err; 
+    TVShow.find({}, function (err, shows) {
+      if (err) throw err;
       res.send(shows);
     });
   });
 });
 
 // Delete the last review put in for a certain show
-app.delete('/show/:title/review/last', function(req, res) {
-  Movie.findOne({ title: req.params.title.toUpperCase() }, function(err, show) {
+app.delete('/show/:title/review/last', function (req, res) {
+  Movie.findOne({ title: req.params.title }, function (err, show) {
+    if (err) throw err;
+    if (!show) return res.send('No show found with that title.');
+
+    if (show.reviews.length == 0) {
+      return res.send('No reviews to delete.');
+    }
+
+    show.reviews.splice(movie.reviews.length - 1, 1);
+
+    show.save(function (err) {
       if (err) throw err;
-      if (!show) return res.send('No show found with that title.');
-
-      if (show.reviews.length == 0) {
-          return res.send('No reviews to delete.');
-      }
-
-      show.reviews.splice(movie.reviews.length - 1, 1);
-
-      show.save(function(err) {
-          if (err) throw err;
-          res.send('Sucessfully deleted last review.');
-      });
+      res.send('Sucessfully deleted last review.');
+    });
   });
 });
 
-app.delete('api/show/:title/review/last', function(req, res) {
-  Movie.findOne({ title: req.params.title.toUpperCase() }, function(err, show) {
+app.delete('api/show/:title/review/last', function (req, res) {
+  Movie.findOne({ title: req.params.title }, function (err, show) {
+    if (err) throw err;
+    if (!show) return res.send('No show found with that title.');
+
+    if (show.reviews.length == 0) {
+      return res.send('No reviews to delete.');
+    }
+
+    show.reviews.splice(movie.reviews.length - 1, 1);
+
+    show.save(function (err) {
       if (err) throw err;
-      if (!show) return res.send('No show found with that title.');
+      res.send('Sucessfully deleted last review.');
+    });
 
-      if (show.reviews.length == 0) {
-          return res.send('No reviews to delete.');
-      }
-
-      show.reviews.splice(movie.reviews.length - 1, 1);
-
-      show.save(function(err) {
-          if (err) throw err;
-          res.send('Sucessfully deleted last review.');
-      });
-
-      TVShow.find({}, function(err, shows) { 
-        if (err) throw err; 
-        res.send(shows);
-      });
+    TVShow.find({}, function (err, shows) {
+      if (err) throw err;
+      res.send(shows);
+    });
   });
 });
 
@@ -455,6 +489,6 @@ app.get("/bygenre", function(req, res) {
   });
 }); */
 
-app.listen(process.env.PORT || 3000, function() {
-    console.log('Listening!');
+app.listen(process.env.PORT || 3000, function () {
+  console.log('Listening!');
 });

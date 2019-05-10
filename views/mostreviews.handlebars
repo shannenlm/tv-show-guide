@@ -1,4 +1,4 @@
-<h1 id="title">Alphabetically Sorted</h1>
+<h1 id="title">TV Shows Sorted by Most Reviews:</h1>
 
 <ul class="showlist">
     {{#each data}}
@@ -12,6 +12,7 @@
                     <div id="genres"><b style="font-weight:600">Genre(s):</b> {{this.genres}}</div>
                     <div id="language"><b style="font-weight:600">Primary language:</b> {{this.language}}</div>
                     <div id="rating"><b style="font-weight:600">Rating (as seen on IMDb):</b> {{this.rating}}</div>
+                    <div id="numreviews"><b style="font-weight:600"># of Reviews:</b> {{this.reviews.length}}</div>
                 </div>
             </div>
         </a>
