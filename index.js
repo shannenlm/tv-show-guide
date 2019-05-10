@@ -44,6 +44,34 @@ app.get("/", function (req, res) {
   });
 });
 
+app.get('/byrating', function (req, res) {
+  TVShow.find({}, function(err, tvshows) {
+    if (err) throw err;
+    var byrating = _.sortBy(tvshows, function (show) {
+      return -parseInt(show.rating);
+    })
+    console.log(byrating);
+    res.render('byrating', {
+      data: byrating
+    });
+  });
+})
+
+app.get('/bygenre', function(req, res) {
+  TVShow.find({}, function(err, tvshows) {
+    if(err) throw err;
+    TVShow.find({}, 'genres', function(err, genres) {
+      var g = _.uniq(_.flatten(_.pluck(genres, 'genres')), function(ele){
+        return ele.toLowerCase();
+      });
+      res.render('bygenre', {
+        genres: g,
+        data: tvshows
+      });
+    });
+  });
+})
+
 // API call that displays all the shows we have
 app.get("/api/shows", function(res,req){ 
   TVShow.find({}, function(err, shows) { 
