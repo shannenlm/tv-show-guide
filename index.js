@@ -320,9 +320,9 @@ app.post("/api/show/:title/add-review", function (req, res) {
   });
 });
 
-app.get("/show/:title/add-comment", function (req, res) {
+/*app.get("/show/:title/add-comment", function (req, res) {
   res.render("commentform.handlebars", { title: req.params.title });
-});
+});*/
 
 app.post("/show/:title/add-comment", function (req, res) {
   TVShow.findOne({ title: req.params.title }, function (err, show) {
@@ -393,6 +393,7 @@ app.delete('/show/:title/review/last', function (req, res) {
 
     show.save(function (err) {
       if (err) throw err;
+      io.emit('deleted review');
       res.send('Sucessfully deleted last review.');
     });
   });

@@ -136,6 +136,17 @@ button#addreview {
     border: 4px solid rgb(64, 185, 196);
 }
 
+button#deletelastreview { 
+    border-radius: 10px;
+    width: 250px;
+    height: 40px;
+
+    background: rgb(212, 152, 137);
+    color: rgb(107, 107, 107);
+
+    border: 4px solid rgb(196, 64, 64);
+}
+
 div.content { 
     color: rgb(107, 107, 107);
 }
