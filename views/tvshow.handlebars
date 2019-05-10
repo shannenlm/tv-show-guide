@@ -1,0 +1,24 @@
+<article class="showdisplay">
+    <h1 id="title">Title: {{_title}} </h1>
+
+    <li>Network: {{_network}}</li>
+    <li>Actor(s): {{_actors}}</li>
+    <li>Genre(s): {{_genres}}</li>
+    <li>Primary language: {{_language}}</li>
+    <li>Rating (as seen on IMDb): {{_rating}}</li>
+
+    <h1>Reviews:</h1>
+    <a id="addreview" href="">Add new review.</a>
+
+    <h1>Comments:</h1>
+    <a id="addcomment" href="">Add a comment.</a>
+
+<script> 
+    var link = "/show/{{{_title}}}/add-review";
+    document.getElementById("addreview").setAttribute("href", link);
+
+    var link2 = "/show/{{{_title}}}/add-comment";
+    document.getElementById("addcomment").setAttribute("href", link2);
+</script>
+
+</article>

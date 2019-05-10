@@ -45,10 +45,28 @@ app.get("/", function (req, res) {
 });
 
 // API call that displays all the shows we have
-app.get("/api/shows", function(res,req){ 
+app.get("/api/shows", function(req,res){ 
   TVShow.find({}, function(err, shows) { 
     if (err) throw err; 
+    
     res.send(shows);
+  });
+});
+
+app.get("/show/:title", function(req, res){
+  TVShow.findOne({title: req.params.title.toUpperCase()}, function(err, show) { 
+    if (err) throw err; 
+    
+    res.render("tvshow", {
+      _title: show.title, 
+      _network: show.network, 
+      _actors: show.actors,
+      _genres: show.genres, 
+      _language: show.language, 
+      _rating: show.rating,
+      _reviews: show.reviews,
+      _comments: show.comments
+    });
   });
 });
 

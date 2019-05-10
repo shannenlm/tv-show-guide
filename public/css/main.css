@@ -143,3 +143,7 @@ div#genreoptions{
 #entrytitle {
     margin-block-end: 5px;
 }
+
+article.showdisplay{ 
+    padding-left: 20px;
+}
