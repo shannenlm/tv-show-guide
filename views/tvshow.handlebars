@@ -3,16 +3,16 @@
         <font size="+3">{{_title}}</font>
     </h1>
 
-    <li>Network: {{_network}}</li>
-    <li>Actor(s): {{_actors}}</li>
-    <li>Genre(s): {{_genres}}</li>
-    <li>Primary language: {{_language}}</li>
-    <li>Rating (as seen on IMDb): {{_rating}}</li>
+    <li><b>Network:</b> {{_network}}</li>
+    <li><b>Actor(s):</b> {{_actors}}</li>
+    <li><b>Genre(s):</b> {{_genres}}</li>
+    <li><b>Primary language:</b> {{_language}}</li>
+    <li><b>Rating (as seen on IMDb):</b> {{_rating}}</li>
 
     <h1 id="showtitle">Reviews:</h1>
     <b>Average rating:</b> {{ avgRating _reviews }} <br /> <br />
-    <a class="add" id="addreview" href="">Add new review</a> <br />
-    
+    <div id="submit"><button type="button" id="addreview"><b>Add new review</b></button></div>
+    <br />
     
     {{#each _reviews}}
     <div class="review">
@@ -91,7 +91,9 @@
 
     <script>
         var link = "/show/{{{_title}}}/add-review";
-        document.getElementById("addreview").setAttribute("href", link);
+        document.getElementById("addreview").onclick = function () {
+        location.href = link;
+        };;
 
         /*var link2 = "/show/{{{_title}}}/add-comment";
         document.getElementById("addcomment").setAttribute("href", link2);*/
