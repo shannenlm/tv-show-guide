@@ -1,5 +1,5 @@
 <article class="showdisplay">
-    <h1 id="title">Title: {{_title}} </h1>
+    <h1 id="title"><font size="+3">{{_title}}</font></h1>
 
     <li>Network: {{_network}}</li>
     <li>Actor(s): {{_actors}}</li>
@@ -7,25 +7,27 @@
     <li>Primary language: {{_language}}</li>
     <li>Rating (as seen on IMDb): {{_rating}}</li>
 
-    <h1>Reviews:</h1>
-    <a id="addreview" href="">Add new review.</a>
+    <h1 id="title">Reviews:</h1>
+    <a id="addreview" href="">Add new review</a>
 
     {{#each _reviews}}
     <div class="review"> 
-        <b>Author:</b> {{this.author}}
-        <b>Publisher:</b> {{this.publisher}}
-        <b>Rating:</b> {{this.rating}}
-        <b>Review:</b> {{this.text}}
+        <b>Author:</b> {{this.author}} <br />
+        <b>Publisher:</b> {{this.publisher}} <br />
+        <b>Rating:</b> {{this.rating}} <br />
+        <b>Review:</b> {{this.text}} <br /> 
+        <br />
     </div>
     {{/each}}
 
-    <h1>Comments:</h1>
-    <a id="addcomment" href="">Add a comment.</a>
+    <h1 id="title">Comments:</h1>
+    <a id="addcomment" href="">Add a comment</a>
 
     {{#each _comments}}
     <div class="comments"> 
-        <b>Username:</b> {{this.username}}
-        <b>Comment:</b> {{this.text}}
+        <b>Username:</b> {{this.username}} <br />
+        <b>Comment:</b> {{this.text}} <br /> 
+        <br />
     </div>
     {{/each}}
 
