@@ -1,7 +1,3 @@
-<br>
-
-<input id="search" name="search" type="text" placeholder="Search by title...">
-
 <ul class="showlist">
     {{#each data}}
     <li class="showlistitem">
@@ -26,38 +22,3 @@
     <a href="/addshow">Add the first one!</a>
 </article>
 {{/each}}
-
-<article id="noMatches" hidden="hidden">
-    <h1>No matches found!</h1>
-</article>
-
-<script>
-    $(document).ready(function () {
-        $("#search").keyup(function () {
-            var word = $(this).val().toLowerCase();
-            var count = 0;
-
-            $(".entry").each(function (index, element) {
-                var _title = $(element).find("#entrytitle").text().toLowerCase();
-
-                if (_title.search(new RegExp(word, "i")) < 0) {
-                    $(this).fadeOut();
-                }
-                else {
-                    $(this).show();
-                    count++;
-                }
-            });
-
-            if (count == 0) {
-                $("#noMatches").show();
-            }
-            else {
-                $("#noMatches").hide();
-            }
-
-        });
-
-    });
-
-</script>
