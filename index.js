@@ -245,25 +245,15 @@ app.post("/show/:title/add-comment", function (req, res) {
 });
 
 // Delete a TV Show :( 
-<<<<<<< HEAD
-app.delete("/show/:title", function (req, res) {
-  TVShow.findByIdAndRemove(req.params.title.toUpperCase(), function (err, show) {
-=======
 app.delete("/show/:title", function(req,res) { 
   TVShow.findOneAndDelete({title: req.params.title.toUpperCase()}, function(err, show) { 
->>>>>>> 8abcebfb203e44a8ace55169795d5d3746a1ee4e
     if (err) throw err;
     res.send('TV Show deleted!');
   });
 });
 
-<<<<<<< HEAD
-app.delete("api/show/:title", function (req, res) {
-  TVShow.findByIdAndRemove(req.params.title.toUpperCase(), function (err, show) {
-=======
 app.delete("api/show/:title", function(req,res) { 
   TVShow.findOneAndDelete({title: req.params.title.toUpperCase()}, function(err, show) { 
->>>>>>> 8abcebfb203e44a8ace55169795d5d3746a1ee4e
     if (err) throw err;
 
     TVShow.find({}, function (err, shows) {
