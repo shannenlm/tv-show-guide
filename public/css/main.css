@@ -76,8 +76,8 @@ a#title {
 }
 
 h1#showtitle {
-    color: rgb(250, 86, 81);
-    background: #FFEFE0;
+    color: #FFBC3F;
+    background: rgb(73, 73, 73);
 
     padding-left: 15px;
     padding-top: 15px;

@@ -1,5 +1,5 @@
 <article class="showdisplay">
-    <h1 id="title"><font size="+3">{{_title}}</font></h1>
+    <h1 id="showtitle"><font size="+3">{{_title}}</font></h1>
 
     <li>Network: {{_network}}</li>
     <li>Actor(s): {{_actors}}</li>
@@ -7,7 +7,7 @@
     <li>Primary language: {{_language}}</li>
     <li>Rating (as seen on IMDb): {{_rating}}</li>
 
-    <h1 id="title">Reviews:</h1>
+    <h1 id="showtitle">Reviews:</h1>
     <a class="add" id="addreview" href="">Add new review</a> 
     
     {{#each _reviews}}
@@ -20,7 +20,7 @@
     </div>
     {{/each}}
 
-    <h1 id="title">Comments:</h1>
+    <h1 id="showtitle">Comments:</h1>
     <a class="add" id="addcomment" href="">Add a comment</a>
 
     {{#each _comments}}
