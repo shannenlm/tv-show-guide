@@ -35,7 +35,7 @@
         {{/each}}
     </div>
 
-    <div id="snackbar">New comment added!</div>
+    <div id="snackbar">New comment added at {{ getTime }}!</div>
 
     <article id="commentform">
         <form id="post" method="POST" action="">
@@ -91,8 +91,8 @@
 
     <script>
         var link = "/show/{{{_title}}}/add-review";
-        document.getElementById("addreview").onclick = function () {
-        location.href = link;
+            document.getElementById("addreview").onclick = function () {
+            location.href = link;
         };;
 
         /*var link2 = "/show/{{{_title}}}/add-comment";

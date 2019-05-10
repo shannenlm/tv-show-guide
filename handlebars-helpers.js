@@ -1,4 +1,5 @@
 // helpers for express handlebars
+var moment = require('moment');
 
 module.exports = {
   avgRating: function(data) { 
@@ -14,5 +15,9 @@ module.exports = {
     }
 
     return sum/count;
+  },
+
+  getTime: function() { 
+    return moment().format('MMMM Do YYYY, h:mm:ss a');
   }
 }
