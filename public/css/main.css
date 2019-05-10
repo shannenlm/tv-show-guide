@@ -147,6 +147,17 @@ button#deletelastreview {
     border: 4px solid rgb(196, 64, 64);
 }
 
+button#deleteshow { 
+    border-radius: 10px;
+    width: 150px;
+    height: 40px;
+
+    background: rgb(196, 64, 64);
+    color: black;
+
+    border: 4px solid rgb(196, 64, 64);
+}
+
 div.content { 
     color: rgb(107, 107, 107);
 }

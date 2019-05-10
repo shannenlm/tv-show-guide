@@ -54,6 +54,7 @@
             <div id="submit"><button type="submit" id="submit"><b>Submit</b></button></div>
         </form>
     </article>
+    <br /><br /><br />
 
     <script>
         document.getElementById("text").style.height = "100px";
@@ -61,7 +62,7 @@
         var socket = io();
 
         $('#deletelastreview').click(function(){
-            var title = $('#showtitle').text().trim()
+            var title = $('#showtitle').text().trim();
             $.ajax({
                 type: "DELETE",
                 url: '/show/' + title + '/review/last',
@@ -107,10 +108,21 @@
     </script>
 
     <form id="deleteshow" method="delete" action="/show/{{{_title}}}">
-        <div id="submit"><button type="submit" id="submit"><b>Delete show</b></button></div>
+        <div id="delete"><button type="button" id="deleteshow"><b>Delete show</b></button></div>
     </form>
 
     <script>
+        $('#deleteshow').click(function(){
+            var title = $('#showtitle').text().trim();
+            $.ajax({
+                type: "DELETE",
+                url: '/show/' + title,
+                success: function (data, status) {
+                    console.log(data);
+                }
+            });
+            $(location).attr('href', '/')
+        })
 
         var link = "/show/{{{_title}}}/add-review";
             document.getElementById("addreview").onclick = function () {
