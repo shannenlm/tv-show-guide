@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 var dotenv = require('dotenv');
 var TVShow = require('./models/TV-shows');
 var _ = require("underscore");
+var tinycolor = require("tinycolor2"); // IMPLEMENT THIS
 
 // Load environment variables
 dotenv.config();
@@ -225,14 +226,14 @@ app.post("/show/:title/add-comment", function(req,res) {
 
 // Delete a TV Show :( 
 app.delete("/show/:title", function(req,res) { 
-  TVShow.findByIdAndRemove(req.params.title.toUpperCase(), function(err, show) { 
+  TVShow.findOneAndDelete({title: req.params.title.toUpperCase()}, function(err, show) { 
     if (err) throw err;
     res.send('TV Show deleted!');
   });
 });
 
 app.delete("api/show/:title", function(req,res) { 
-  TVShow.findByIdAndRemove(req.params.title.toUpperCase(), function(err, show) { 
+  TVShow.findOneAndDelete({title: req.params.title.toUpperCase()}, function(err, show) { 
     if (err) throw err;
 
     TVShow.find({}, function(err, shows) { 
