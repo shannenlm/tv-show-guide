@@ -10,8 +10,24 @@
     <h1>Reviews:</h1>
     <a id="addreview" href="">Add new review.</a>
 
+    {{#each _reviews}}
+    <div class="review"> 
+        <b>Author:</b> {{this.author}}
+        <b>Publisher:</b> {{this.publisher}}
+        <b>Rating:</b> {{this.rating}}
+        <b>Review:</b> {{this.text}}
+    </div>
+    {{/each}}
+
     <h1>Comments:</h1>
     <a id="addcomment" href="">Add a comment.</a>
+
+    {{#each _comments}}
+    <div class="comments"> 
+        <b>Username:</b> {{this.username}}
+        <b>Comment:</b> {{this.text}}
+    </div>
+    {{/each}}
 
 <script> 
     var link = "/show/{{{_title}}}/add-review";
