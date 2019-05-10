@@ -27,7 +27,6 @@
     <br />
 
     <h1 id="showtitle">Comments:</h1>
-    <!-- <a class="add" id="addcomment" href="">Add a comment</a> -->
 
     <div class="comments">
         {{#each _comments}}
@@ -37,7 +36,7 @@
         {{/each}}
     </div>
 
-    <div id="snackbar">New comment added at <!--{{ getTime }}!--></div>
+    <div id="snackbar">New comment added at </div>
 
     <article id="commentform">
         <form id="post" method="POST" action="">
@@ -128,9 +127,6 @@
             document.getElementById("addreview").onclick = function () {
             location.href = link;
         };;
-
-        /*var link2 = "/show/{{{_title}}}/add-comment";
-        document.getElementById("addcomment").setAttribute("href", link2);*/
     </script>
 
 </article>
