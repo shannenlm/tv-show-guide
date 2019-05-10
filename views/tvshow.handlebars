@@ -11,8 +11,7 @@
 
     <h1 id="showtitle">Reviews:</h1>
     <b>Average rating:</b> {{ avgRating _reviews }} <br /> <br />
-    <div id="submit"><button type="button" id="addreview"><b>Add new review</b></button></div>
-    <br />
+    <div id="submit"><button type="button" id="addreview"><b>Add new review</b></button></div> <br />
     
     {{#each _reviews}}
     <div class="review">
@@ -23,6 +22,9 @@
         <br />
     </div>
     {{/each}}
+
+    <div id="delete"><button type="button" id="deletelastreview"><b>Delete the last review</b></button></div>
+    <br />
 
     <h1 id="showtitle">Comments:</h1>
     <!-- <a class="add" id="addcomment" href="">Add a comment</a> -->
@@ -35,7 +37,7 @@
         {{/each}}
     </div>
 
-    <div id="snackbar">New comment added at {{ getTime }}!</div>
+    <div id="snackbar">New comment added at <!--{{ getTime }}!--></div>
 
     <article id="commentform">
         <form id="post" method="POST" action="">
@@ -57,6 +59,17 @@
         document.getElementById("text").style.height = "100px";
 
         var socket = io();
+
+        $('#deletelastreview').click(function(){
+            var title = $('#showtitle').text().trim()
+            $.ajax({
+                type: "DELETE",
+                url: '/show/' + title + '/review/last',
+                success: function (data, status) {
+                    console.log(data);
+                }
+            });
+        })
 
         $('#post').submit(function () {
             var user = $('#user').val();
@@ -82,9 +95,14 @@
         socket.on('new comment', function (com) {
             $('#snackbar').addClass("show");
             setTimeout(function(){ $('#snackbar').removeClass("show"); }, 3000);
+            $('#snackbar').append(moment().format('MMMM Do YYYY, h:mm:ss a') + '!');
             $('.comments').append('<b>Username:</b> ' + com.comments[com.comments.length - 1].username + ' <br />');
             $('.comments').append('<b>Comment:</b> ' + com.comments[com.comments.length - 1].text + ' <br />');
             $('.comments').append('<br />');
+        });
+
+        socket.on('deleted review', function () {
+            $('.review:last').remove();
         });
     </script>
 
