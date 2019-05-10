@@ -232,8 +232,6 @@ app.post("/addshow", function (req, res) {
     comments: []
   });
 
-
-
   // if show does not exist, create it. else, don't make it
   TVShow.findOne({ title: body.title }, function (err, tvshow) {
     if (err) throw err;
@@ -323,10 +321,6 @@ app.post("/api/show/:title/add-review", function (req, res) {
     });
   });
 });
-
-/*app.get("/show/:title/add-comment", function (req, res) {
-  res.render("commentform.handlebars", { title: req.params.title });
-});*/
 
 app.post("/show/:title/add-comment", function (req, res) {
   TVShow.findOne({ title: req.params.title }, function (err, show) {
