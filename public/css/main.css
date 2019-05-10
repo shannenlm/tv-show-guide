@@ -115,13 +115,13 @@ button#submit {
     height: 40px;
 
     background: #A5DAD2;
-    color: rgb(252, 126, 88);
+    color: rgb(107, 107, 107);
 
     border: 4px solid rgb(64, 185, 196);
 }
 
 div.content { 
-    color: rgb(255, 247, 242);
+    color: rgb(107, 107, 107);
 }
 
 button {
@@ -181,6 +181,7 @@ div#genreoptions{
 
 #entrytitle {
     margin-block-end: 5px;
+    color: rgb(255, 138, 4)
 }
 
 article.showdisplay{ 
