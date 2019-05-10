@@ -8,7 +8,6 @@ var dotenv = require('dotenv');
 var TVShow = require('./models/TV-shows');
 var _ = require("underscore");
 var ld = require("lodash");
-var tinycolor = require("tinycolor2"); // IMPLEMENT THIS
 
 // Load environment variables
 dotenv.config();
