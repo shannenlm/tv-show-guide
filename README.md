@@ -107,3 +107,15 @@ Navigation Filters
 4. Most Reviews => `  /mostreviews  `
 5. Random Rec -> `  /randomrec  `
 
+### 6. Additional API Endpoints
+
+1. GET: `/api/show/:title`
+2. POST: ` /api/addshow `
+3. POST: ` /api/show/:title/add-review `
+4. POST: ` /api/show/:title/add-comment `
+5. DELETE: ` /api/show/:title `
+6. DELETE: ` /api/show/:title/review/last `
+7. GET: ` /api/byrating ` 
+8. GET: ` /api/alphabetical `
+9. GET: ` /api/randomshow `
+10. GET: ` /api/mostreviews `
