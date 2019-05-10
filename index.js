@@ -50,7 +50,6 @@ app.get('/byrating', function (req, res) {
     var byrating = _.sortBy(tvshows, function (show) {
       return -parseInt(show.rating);
     })
-    console.log(byrating);
     res.render('byrating', {
       data: byrating
     });
@@ -74,6 +73,18 @@ app.get('/bygenre', function(req, res) {
 
 app.get('/about', function(req, res) {
   res.render('about');
+})
+
+app.get('/alphabetical', function(req, res) {
+  TVShow.find({}, function(err, tvshows) {
+    if (err) throw err;
+    var alphabetical = _.sortBy(tvshows, function (show) {
+      return show.title;
+    })
+    res.render('alphabetically', {
+      data: alphabetical
+    });
+  });
 })
 
 // API call that displays all the shows we have
