@@ -248,12 +248,12 @@ app.post("/show/:title/add-comment", function (req, res) {
 
     show.comments.push({
       username: req.body.username,
-      text: req.body.comment
+      text: req.body.text
     })
 
     show.save(function (err) {
       if (err) throw err;
-      io.emit('new comment', movie);
+      io.emit('new comment', show);
       res.send("Added comment!");
     });
   });
