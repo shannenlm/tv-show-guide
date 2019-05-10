@@ -8,7 +8,9 @@
     <li>Rating (as seen on IMDb): {{_rating}}</li>
 
     <h1 id="showtitle">Reviews:</h1>
-    <a class="add" id="addreview" href="">Add new review</a> 
+    <b>Average rating:</b> {{ avgRating _reviews }} <br /> <br />
+    <a class="add" id="addreview" href="">Add new review</a> <br />
+    
     
     {{#each _reviews}}
     <div class="review"> 
