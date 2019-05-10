@@ -11,20 +11,16 @@
   <script src="/socket.io/socket.io.js"></script>
 </head>
 
-<script>
-  var socket = io();
-</script>
-
 <div class="nav">
   <div>
-    <div ><a id="title" href="/">TV Show Guide</a></div>
+    <div><a id="title" href="/">TV Show Guide</a></div>
     <a href="/about">About</a>
     <a href="/addshow">Add a New Show</a>
-    <a href="/byrating">By Rating</a>   <!-- sort by rating --> 
-    <a href="/bygenre">By Genre</a>     <!-- allows you to filter shows by genre -->
-    <a href="/alphabetical">Alphabetical Order</a>  <!-- sort alphabetically -->
+    <a href="/byrating">By Rating</a> <!-- sort by rating -->
+    <a href="/bygenre">By Genre</a> <!-- allows you to filter shows by genre -->
+    <a href="/alphabetical">Alphabetical Order</a> <!-- sort alphabetically -->
     <a href="/mostreviews">Most Reviews</a> <!-- sort by most reviews -->
-    <a href="/randomshow">Random Rec</a>   <!-- displays a random tv show -->
+    <a href="/randomshow">Random Rec</a> <!-- displays a random tv show -->
   </div>
 </div>
 
@@ -32,6 +28,6 @@
   <div class="container" id="mainBody">
     {{{body}}}
   </div>
-</body> 
+</body>
 
 </html>
