@@ -121,11 +121,12 @@ Search Field: TV Show Title
 ### 5. Navigation Pages
 
 Navigation Filters
-1. By Rating -> `  /byrating  `
-2. By Genre -> `  /bygenre  `
-3. Alphabetically -> `  /alphabetical  `
-4. Most Reviews => `  /mostreviews  `
-5. Random TV Show -> `  /randomshow  `
+1. About -> ` /about `
+2. By Rating -> `  /byrating  `
+3. By Genre -> `  /bygenre  `
+4. Alphabetically -> `  /alphabetical  `
+5. Most Reviews -> `  /mostreviews  `
+6. Random TV Show -> `  /randomshow  `
 
 ### 6. Additional API Endpoints
 
@@ -139,3 +140,8 @@ Navigation Filters
 8. GET: ` /api/alphabetical `
 9. GET: ` /api/randomshow `
 10. GET: ` /api/mostreviews `
+
+### 7. NPM Packages
+
+1. Lodash
+2. Moment.js
