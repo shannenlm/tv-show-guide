@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({
 
 app.engine('handlebars', exphbs({
   defaultLayout: 'main',
-  helpers: require('./handlebars-helpers')
+  helpers: require('./handlebars-helpers.js')
 }));
 app.set('view engine', 'handlebars');
 app.use('/public', express.static('public'));
