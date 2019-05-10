@@ -88,8 +88,12 @@
         });
     </script>
 
+    <form id="deleteshow" method="delete" action="/show/{{{_title}}}">
+        <div id="submit"><button type="submit" id="submit"><b>Delete show</b></button></div>
+    </form>
 
     <script>
+
         var link = "/show/{{{_title}}}/add-review";
             document.getElementById("addreview").onclick = function () {
             location.href = link;

@@ -237,7 +237,7 @@ app.post("/addshow", function (req, res) {
       // Save show to database
       show.save(function (err) {
         if (err) throw err;
-        return res.redirect('/show/' + title);
+        res.redirect('/show/' + body.title);
       })
     }
   });
@@ -290,7 +290,7 @@ app.post("/show/:title/add-review", function (req, res) {
     show.reviews.push({
       author: req.body.author,
       publisher: req.body.publisher,
-      rating: parseInt(req.body.rating),
+      rating: parseFloat(req.body.rating),
       text: req.body.text
     })
 
@@ -309,7 +309,7 @@ app.post("/api/show/:title/add-review", function (req, res) {
     show.reviews.push({
       author: req.body.author,
       publisher: req.body.publisher,
-      rating: parseInt(req.body.rating),
+      rating: parseFloat(req.body.rating),
       text: req.body.text
     })
 
@@ -364,7 +364,7 @@ app.post("/api/show/:title/add-comment", function (req, res) {
 app.delete("/show/:title", function(req,res) {
   TVShow.findOneAndDelete({title: req.params.title}, function(err, show) { 
     if (err) throw err;
-    res.send('TV Show deleted!');
+    res.redirect('/');
   });
 });
 
