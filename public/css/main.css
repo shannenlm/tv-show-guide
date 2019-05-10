@@ -1,14 +1,14 @@
 /* Please add your own! */
 
 body {
-    background-color: rgb(36, 148, 204);
+    background-color: #191414;
     color: #FFEFE0;
 
     font-family: Arial, Helvetica, sans-serif;
 }
 
 .nav { 
-    background-color: rgb(23, 83, 173);
+    background-color: #282828;
     background-size: cover;
     
     display: block;
@@ -29,12 +29,27 @@ body {
 }
 
 a { 
-    color: rgb(255, 151, 92);
+    color: #FFECC8;
     text-decoration: none;
 
     font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
     /*font-weight: 500;*/
+}
+
+a.add { 
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: initial;
+
+    padding: 7px;
+    font-size: 15px;
+
+    margin-top: -5px;
+    margin-bottom: 10px;
 }
 
 #search { 
@@ -48,7 +63,7 @@ a {
 }
 
 a#title {
-    color: rgb(250, 86, 81);
+    color: #FFB224;
     
     font-size: 40px;
     font-family: Arial, Helvetica, sans-serif;
@@ -60,7 +75,7 @@ a#title {
     padding-bottom: 3px;
 }
 
-h1#title {
+h1#showtitle {
     color: rgb(250, 86, 81);
     background: #FFEFE0;
 
@@ -97,11 +112,12 @@ div#submit {
 button#submit { 
     border-radius: 10px;
     width: 150px;
-    height: 30px;
+    height: 40px;
 
-    background: white;
+    background: #A5DAD2;
+    color: rgb(252, 126, 88);
 
-    border: 2px solid #1DB954;
+    border: 4px solid rgb(64, 185, 196);
 }
 
 div.content { 

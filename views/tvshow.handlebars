@@ -8,8 +8,8 @@
     <li>Rating (as seen on IMDb): {{_rating}}</li>
 
     <h1 id="title">Reviews:</h1>
-    <a id="addreview" href="">Add new review</a>
-
+    <a class="add" id="addreview" href="">Add new review</a> 
+    
     {{#each _reviews}}
     <div class="review"> 
         <b>Author:</b> {{this.author}} <br />
@@ -21,7 +21,7 @@
     {{/each}}
 
     <h1 id="title">Comments:</h1>
-    <a id="addcomment" href="">Add a comment</a>
+    <a class="add" id="addcomment" href="">Add a comment</a>
 
     {{#each _comments}}
     <div class="comments"> 
