@@ -215,6 +215,8 @@ app.post("/addshow", function (req, res) {
   body.actors = body.actors.split(",");
   body.actors = body.actors.map(s => s.trim());
 
+  console.log(body.rating);
+
   body.genres = body.genres.split(",");
   body.genres = body.genres.map(s => s.trim());
 
@@ -225,10 +227,12 @@ app.post("/addshow", function (req, res) {
     actors: body.actors,
     genres: body.genres,
     language: body.language,
-    rating: parseInt(body.rating),
+    rating: body.rating,
     reviews: [],
     comments: []
   });
+
+
 
   // if show does not exist, create it. else, don't make it
   TVShow.findOne({ title: body.title }, function (err, tvshow) {
@@ -290,7 +294,7 @@ app.post("/show/:title/add-review", function (req, res) {
     show.reviews.push({
       author: req.body.author,
       publisher: req.body.publisher,
-      rating: parseFloat(req.body.rating),
+      rating: req.body.rating,
       text: req.body.text
     })
 
@@ -309,7 +313,7 @@ app.post("/api/show/:title/add-review", function (req, res) {
     show.reviews.push({
       author: req.body.author,
       publisher: req.body.publisher,
-      rating: parseFloat(req.body.rating),
+      rating: req.body.rating,
       text: req.body.text
     })
 
