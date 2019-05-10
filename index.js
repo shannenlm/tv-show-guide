@@ -23,6 +23,8 @@ mongoose.connection.on('error', function () {
 
 // Set up Express App
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -489,6 +491,10 @@ app.get("/bygenre", function(req, res) {
   });
 }); */
 
-app.listen(process.env.PORT || 3000, function () {
+io.on('connection', function(socket) {
+  console.log('NEW connection.');
+});
+
+http.listen(process.env.PORT || 3000, function () {
   console.log('Listening!');
 });
