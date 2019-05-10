@@ -1,5 +1,5 @@
 <article class="showdisplay">
-    <h1 id="title">Title: {{_title}} </h1>
+    <h1 id="showtitle">Title: {{_title}}</h1>
 
     <li>Network: {{_network}}</li>
     <li>Actor(s): {{_actors}}</li>
@@ -11,7 +11,7 @@
     <a id="addreview" href="">Add new review.</a>
 
     {{#each _reviews}}
-    <div class="review"> 
+    <div class="review">
         <b>Author:</b> {{this.author}}
         <b>Publisher:</b> {{this.publisher}}
         <b>Rating:</b> {{this.rating}}
@@ -20,21 +20,64 @@
     {{/each}}
 
     <h1>Comments:</h1>
-    <a id="addcomment" href="">Add a comment.</a>
-
+    <!-- <a id="addcomment" href="">Add a comment.</a> -->
     {{#each _comments}}
-    <div class="comments"> 
+    <div class="comments">
         <b>Username:</b> {{this.username}}
         <b>Comment:</b> {{this.text}}
     </div>
     {{/each}}
 
-<script> 
-    var link = "/show/{{{_title}}}/add-review";
-    document.getElementById("addreview").setAttribute("href", link);
+    <article id="commentform">
+        <form id="post" method="POST" action="">
+            <div class="input-field">
+                <label><b>Username: </b></label>
+                <input class="input-text" id="user" type="text" name="username" size="50" placeholder="Name...">
+            </div>
+            <div class="input-field">
+                <label><b>Comment: </b></label>
+                <textarea class="input-text" id="text" rows="100" cols="100" name="comment" size="50"
+                    placeholder="Type here..."></textarea>
+            </div>
 
-    var link2 = "/show/{{{_title}}}/add-comment";
-    document.getElementById("addcomment").setAttribute("href", link2);
-</script>
+            <div id="submit"><button type="submit" id="submit"><b>Submit</b></button></div>
+        </form>
+
+        <script>
+            document.getElementById("text").style.height = "200px";
+
+            $('#post').submit(function () {
+                var user = $('#user').val();
+                var comment = $('#text').val();
+                $('#user').val('');
+                $('#text').val('');
+                $.ajax({
+                    type: "POST",
+                    url: '/show/' + $('#showtitle').text() + '/addcomment',
+                    data: {
+                        username: user,
+                        text: comment
+                    },
+                    success: function (data, status) {
+                        console.log(data);
+                    }
+                });
+                return false;
+            });
+
+            socket.on('new comment', function (com) {
+                $('.comments').append($('<b>').text('Username: ' + com.username));
+                $('.comments').append($('<b>').text('Comment: ' + com.comment));
+            });
+        </script>
+    </article>
+
+    <script>
+        var link = "/show/{{{_title}}}/add-review";
+        document.getElementById("addreview").setAttribute("href", link);
+
+        /*var link2 = "/show/{{{_title}}}/add-comment";
+        document.getElementById("addcomment").setAttribute("href", link2);*/
+    </script>
 
 </article>
