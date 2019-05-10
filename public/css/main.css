@@ -1,18 +1,18 @@
 /* Please add your own! */
 
 body {
-    background-color: #191414;
-    color: white;
+    background-color: rgb(36, 148, 204);
+    color: #FFEFE0;
 
     font-family: Arial, Helvetica, sans-serif;
 }
 
 .nav { 
-    background-color: #282828;
+    background-color: rgb(23, 83, 173);
     background-size: cover;
     
     display: block;
-    color: white;
+    color: #FFEFE0;
     /* text-align: center; */
     /* white-space: nowrap;*/
 
@@ -28,7 +28,7 @@ body {
 }
 
 a { 
-    color: white;
+    color: rgb(255, 151, 92);
     text-decoration: none;
 
     font-size: 20px;
@@ -47,7 +47,7 @@ a {
 }
 
 a#title {
-    color: #1ED761;
+    color: rgb(250, 86, 81);
     
     font-size: 40px;
     font-family: Arial, Helvetica, sans-serif;
@@ -60,7 +60,13 @@ a#title {
 }
 
 h1#title {
-    color: #1ED761;
+    color: rgb(250, 86, 81);
+    background: #FFEFE0;
+    
+    padding-left: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    
     
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 550;
@@ -98,7 +104,7 @@ button#submit {
 }
 
 div.content { 
-    color: rgb(212, 212, 212);
+    color: rgb(255, 247, 242);
 }
 
 button {
@@ -118,9 +124,14 @@ div#genreoptions{
 }
 
 .entry {
-    border: 5px rgb(142, 142, 255);
+    border: 8px rgb(64, 185, 196);
     border-style: solid;
-    padding: 0 15px 15px;
+
+    background: #A5DAD2;
+    
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px;
     border-radius: 15px;
 }
 
