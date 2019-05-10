@@ -72,6 +72,10 @@ app.get('/bygenre', function(req, res) {
   });
 })
 
+app.get('/about', function(req, res) {
+  res.render('about');
+})
+
 // API call that displays all the shows we have
 app.get("/api/shows", function(req,res){ 
   TVShow.find({}, function(err, shows) { 
