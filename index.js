@@ -171,6 +171,11 @@ app.get("/show/:title", function (req, res) {
   TVShow.findOne({ title: req.params.title }, function (err, show) {
     if (err) throw err;
 
+    if(!show){
+      res.send("Show is not in our database. :(");
+      return;
+    }
+
     res.render("tvshow", {
       _title: show.title,
       _network: show.network,
@@ -187,6 +192,11 @@ app.get("/show/:title", function (req, res) {
 app.get("/api/show/:title", function (req, res) {
   TVShow.findOne({ title: req.params.title }, function (err, show) {
     if (err) throw err;
+
+    if(!show){
+      res.send({});
+      return;
+    }
 
     res.send(show);
   });
@@ -228,7 +238,7 @@ app.post("/addshow", function (req, res) {
       // Save show to database
       show.save(function (err) {
         if (err) throw err;
-        return res.redirect('/show/' + req.params.title);
+        return res.redirect('/show/' + title);
       })
     }
   });
@@ -359,7 +369,7 @@ app.delete("/show/:title", function(req,res) {
   });
 });
 
-app.delete("api/show/:title", function(req,res) {
+app.delete("/api/show/:title", function(req,res) {
   TVShow.findOneAndDelete({title: req.params.title}, function(err, show) { 
     if (err) throw err;
 
@@ -370,10 +380,9 @@ app.delete("api/show/:title", function(req,res) {
   });
 });
 
-
 // Delete the last review put in for a certain show
 app.delete('/show/:title/review/last', function (req, res) {
-  Movie.findOne({ title: req.params.title }, function (err, show) {
+  TVShow.findOne({ title: req.params.title }, function (err, show) {
     if (err) throw err;
     if (!show) return res.send('No show found with that title.');
 
@@ -381,7 +390,7 @@ app.delete('/show/:title/review/last', function (req, res) {
       return res.send('No reviews to delete.');
     }
 
-    show.reviews.splice(movie.reviews.length - 1, 1);
+    show.reviews.splice(show.reviews.length - 1, 1);
 
     show.save(function (err) {
       if (err) throw err;
@@ -390,8 +399,8 @@ app.delete('/show/:title/review/last', function (req, res) {
   });
 });
 
-app.delete('api/show/:title/review/last', function (req, res) {
-  Movie.findOne({ title: req.params.title }, function (err, show) {
+app.delete('/api/show/:title/review/last', function (req, res) {
+  TVShow.findOne({ title: req.params.title }, function (err, show) {
     if (err) throw err;
     if (!show) return res.send('No show found with that title.');
 
@@ -399,11 +408,10 @@ app.delete('api/show/:title/review/last', function (req, res) {
       return res.send('No reviews to delete.');
     }
 
-    show.reviews.splice(movie.reviews.length - 1, 1);
+    show.reviews.splice(show.reviews.length - 1, 1);
 
     show.save(function (err) {
       if (err) throw err;
-      res.send('Sucessfully deleted last review.');
     });
 
     TVShow.find({}, function (err, shows) {
